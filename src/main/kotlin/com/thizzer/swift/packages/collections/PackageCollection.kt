@@ -23,11 +23,12 @@ data class Signature(val certificate: Certificate, val signature: String)
 
 class PackageCollection(
     val formatVersion: String = "1.0",
-    var generatedAt: Instant = Instant.now(),
-    var generatedBy: GeneratedBy? = null,
-    val keywords: MutableList<String> = mutableListOf(),
     var name: String? = null,
     var overview: String? = null,
+    val keywords: MutableList<String> = mutableListOf(),
+    val revision: Int? = null,
+    var generatedAt: Instant = Instant.now(),
+    var generatedBy: GeneratedBy? = null,
     val packages: PackageList = PackageList(),
     var signature: Signature? = null
 ) {
