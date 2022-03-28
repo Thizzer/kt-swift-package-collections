@@ -2,7 +2,33 @@
 
 Simple Kotlin library for generating Swift package collections.
 
-## Example
+## Installation
+
+### Maven
+
+```xml
+<dependency>
+	<groupId>com.thizzer.kt-swift-package-collections</groupId>
+	<artifactId>kt-swift-package-collections</artifactId>
+	<version>1.0.1</version>
+</dependency>
+```
+
+### Gradle
+
+#### Groovy
+
+```gradle
+implementation group: 'com.thizzer.kt-swift-package-collections', name: 'kt-swift-package-collections', version: '1.0.1'
+```
+
+#### Kotlin
+
+```kotlin
+implementation("com.thizzer.kt-swift-package-collections:kt-swift-package-collections:1.0.1")
+```
+
+## Usage
 
 ```kotlin
 val myPackageCollection = packageCollection {  
@@ -15,7 +41,7 @@ val myPackageCollection = packageCollection {
             
             versions {
                 version("1.0.0") {
-                    manifest("1.0") {
+                    manifest {
                         packageName = "my-library"
                         products {
                             product {
