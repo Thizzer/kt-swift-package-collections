@@ -104,7 +104,7 @@ class PackageVersion(
     val manifests: MutableMap<String, VersionManifest> = mutableMapOf()
 ) {
     fun manifest(packageName: String, configure: VersionManifest.() -> Unit = {}) {
-        val packageManifest = VersionManifest(packageName)
+        val packageManifest = VersionManifest(packageName = packageName)
         packageManifest.configure()
         manifests[defaultToolsVersion] = packageManifest
     }
