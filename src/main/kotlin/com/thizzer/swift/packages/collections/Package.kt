@@ -6,6 +6,7 @@ package com.thizzer.swift.packages.collections
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 data class PackageLicense(val name: String, val url: String?)
 
@@ -77,8 +78,7 @@ class VersionManifest(
     val products: VersionProductList = VersionProductList(),
     val minimumPlatformVersions: PlatformList = PlatformList(),
     val verifiedCompatibility: PlatformCompatibilityList = PlatformCompatibilityList(),
-    val license: PackageLicense? = null,
-    val createdAt: Instant? = null
+    val license: PackageLicense? = null
 ) {
     fun targets(configure: VersionTargetList.() -> Unit = {}) {
         targets.configure()
@@ -103,6 +103,11 @@ class PackageVersion(
     var summary: String? = null,
     val manifests: MutableMap<String, VersionManifest> = mutableMapOf()
 ) {
+    var createdAt: Instant? = null
+        set(value) {
+            field = value?.truncatedTo(ChronoUnit.SECONDS)
+        }
+
     fun manifest(packageName: String, configure: VersionManifest.() -> Unit = {}) {
         val packageManifest = VersionManifest(packageName = packageName)
         packageManifest.configure()

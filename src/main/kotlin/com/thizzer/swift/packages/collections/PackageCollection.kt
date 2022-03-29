@@ -27,11 +27,14 @@ class PackageCollection(
     var overview: String? = null,
     val keywords: MutableList<String> = mutableListOf(),
     val revision: Int? = null,
-    var generatedAt: Instant = Instant.now(),
     var generatedBy: GeneratedBy? = null,
     val packages: PackageList = PackageList(),
     var signature: Signature? = null
 ) {
+    var generatedAt: Instant = Instant.now()
+        set(value) {
+            field = value.truncatedTo(ChronoUnit.SECONDS)
+        }
 
     fun generatedBy(name: String) {
         generatedBy = GeneratedBy(name)
