@@ -77,7 +77,6 @@ class VersionManifest(
     val targets: VersionTargetList = VersionTargetList(),
     val products: VersionProductList = VersionProductList(),
     val minimumPlatformVersions: PlatformList = PlatformList(),
-    val verifiedCompatibility: PlatformCompatibilityList = PlatformCompatibilityList(),
     val license: PackageLicense? = null
 ) {
     fun targets(configure: VersionTargetList.() -> Unit = {}) {
@@ -91,17 +90,15 @@ class VersionManifest(
     fun minimumPlatformVersions(configure: PlatformList.() -> Unit = {}) {
         minimumPlatformVersions.configure()
     }
-
-    fun verifiedCompatibility(configure: PlatformCompatibilityList.() -> Unit = {}) {
-        verifiedCompatibility.configure()
-    }
 }
 
 class PackageVersion(
     val defaultToolsVersion: String = "5.3.0",
     val version: String,
     var summary: String? = null,
-    val manifests: MutableMap<String, VersionManifest> = mutableMapOf()
+    val manifests: MutableMap<String, VersionManifest> = mutableMapOf(),
+    val verifiedCompatibility: PlatformCompatibilityList = PlatformCompatibilityList(),
+    var license: PackageLicense? = null
 ) {
     var createdAt: Instant? = null
         set(value) {
@@ -112,6 +109,14 @@ class PackageVersion(
         val packageManifest = VersionManifest(packageName = packageName)
         packageManifest.configure()
         manifests[defaultToolsVersion] = packageManifest
+    }
+
+    fun verifiedCompatibility(configure: PlatformCompatibilityList.() -> Unit = {}) {
+        verifiedCompatibility.configure()
+    }
+
+    fun license(name: String, url: String) {
+        license = PackageLicense(name, url)
     }
 }
 
@@ -132,9 +137,8 @@ class Package(
     var license: PackageLicense? = null,
     var versions: PackageVersionList = PackageVersionList()
 ) {
-    fun license(name: String, url: String, configure: PackageLicense.() -> Unit) {
+    fun license(name: String, url: String) {
         license = PackageLicense(name, url)
-        license?.apply { configure() }
     }
 
     fun keywords(vararg keyword: String) {

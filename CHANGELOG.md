@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-04-01
+
+### Added
+- Added license field to Version
+
+### Changed
+- Removed need to configure Package license field.
+
+### Fixed
+- Moved verifiedCompatibility to PackageVersion.
+
 ## [1.0.2] - 2022-03-29
 
 ### Changed 
