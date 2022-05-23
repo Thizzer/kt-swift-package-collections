@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.thizzer.kt-swift-package-collections"
-version = "1.2.0-SNAPSHOT"
+version = "1.2.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
