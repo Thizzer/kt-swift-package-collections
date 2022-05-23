@@ -18,7 +18,7 @@ data class Platform(val name: String, var version: String? = null) {
 
 class PlatformList : MutableList<Platform> by mutableListOf() {
     fun platform(name: String, version: String? = null, configure: Platform.() -> Unit): Platform {
-        val platform = Platform(name)
+        val platform = Platform(name, version)
         platform.configure()
         add(platform)
         return platform

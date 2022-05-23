@@ -4,10 +4,9 @@
  */
 package com.thizzer.swift.packages.collections
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.nimbusds.jose.JWSSigner
+import java.security.PrivateKey
+import java.security.cert.X509Certificate
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -49,20 +48,36 @@ class PackageCollection(
         keywords.addAll(keyword)
     }
 
-    fun toJson(pretty: Boolean = false): String {
+    fun sign(privateKey: PrivateKey, certificate: X509Certificate) {
+        sign(privateKey, listOf(certificate))
+    }
+
+    fun sign(privateKey: PrivateKey, certificateChain: List<X509Certificate>) {
+        signInternal(privateKey, certificateChain)
+    }
+
+    fun sign(signer: JWSSigner, certificate: X509Certificate) {
+        sign(signer, listOf(certificate))
+    }
+
+    fun sign(signer: JWSSigner, certificateChain: List<X509Certificate>) {
+        signInternal(signer, certificateChain)
+    }
+
+    fun toJson(pretty: Boolean = false, includeSignature: Boolean = true): String {
         generatedAt = generatedAt.truncatedTo(ChronoUnit.SECONDS)
 
-        val jsonMapper = jacksonObjectMapper()
-        jsonMapper.registerModule(JavaTimeModule())
-        jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-        jsonMapper.setDefaultPropertyInclusion(JsonInclude.Value.construct(JsonInclude.Include.NON_EMPTY, JsonInclude.Include.ALWAYS))
-        jsonMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-
-        return if (pretty) {
-            jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(this)
-        } else {
-            jsonMapper.writeValueAsString(this)
+        val collectionToJson = if(includeSignature || signature == null) {
+            this
         }
+        else {
+            val copyUnsigned = this.clone()
+            copyUnsigned.signature = null
+
+            copyUnsigned
+        }
+
+        return collectionToJson.toJsonString(pretty)
     }
 
     override fun toString(): String {

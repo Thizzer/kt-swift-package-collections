@@ -8,16 +8,19 @@ plugins {
 }
 
 group = "com.thizzer.kt-swift-package-collections"
-version = "1.1.1-SNAPSHOT"
+version = "1.2.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.core:jackson-core:2.13.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.13.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3")
+    implementation("commons-codec:commons-codec:1.15")
+    implementation("org.cryptacular:cryptacular:1.2.5")
+    implementation("com.nimbusds:nimbus-jose-jwt:9.22")
 
     testImplementation(kotlin("test"))
 }

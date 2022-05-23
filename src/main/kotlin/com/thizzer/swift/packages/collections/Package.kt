@@ -13,8 +13,8 @@ data class PackageLicense(val name: String, val url: String?)
 data class VersionTarget(var moduleName: String? = null, var name: String? = null)
 
 class VersionTargetList : MutableList<VersionTarget> by mutableListOf() {
-    fun target(configure: VersionTarget.() -> Unit): VersionTarget {
-        val target = VersionTarget()
+    fun target(moduleName: String? = null, name: String? = null, configure: VersionTarget.() -> Unit = {}): VersionTarget {
+        val target = VersionTarget(moduleName, name)
         target.configure()
         add(target)
         return target

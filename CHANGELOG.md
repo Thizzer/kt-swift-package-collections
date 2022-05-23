@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-05-24
+
+### Added
+- Added convenience function to sign collection.
+- Option to retrieve JSON content without signature.
+
+### Changed
+- Bumped Gradle version.
+- Added moduleName and name to VersionTargetList.
+
+### Fixed
+- Forward version to inline Platform object.
+
 ## [1.1.0] - 2022-04-01
 
 ### Added
