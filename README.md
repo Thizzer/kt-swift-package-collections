@@ -10,7 +10,7 @@ Simple Kotlin library for generating Swift package collections.
 <dependency>
 	<groupId>com.thizzer.kt-swift-package-collections</groupId>
 	<artifactId>kt-swift-package-collections</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 </dependency>
 ```
 
@@ -19,13 +19,13 @@ Simple Kotlin library for generating Swift package collections.
 #### Groovy
 
 ```gradle
-implementation group: 'com.thizzer.kt-swift-package-collections', name: 'kt-swift-package-collections', version: '1.1.0'
+implementation group: 'com.thizzer.kt-swift-package-collections', name: 'kt-swift-package-collections', version: '1.2.0'
 ```
 
 #### Kotlin
 
 ```kotlin
-implementation("com.thizzer.kt-swift-package-collections:kt-swift-package-collections:1.1.0")
+implementation("com.thizzer.kt-swift-package-collections:kt-swift-package-collections:1.2.0")
 ```
 
 ## Usage
