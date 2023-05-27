@@ -12,6 +12,12 @@ data class PackageLicense(val name: String, val url: String?)
 
 data class VersionTarget(var moduleName: String? = null, var name: String? = null)
 
+data class PackageAuthor(var name: String)
+
+data class PackageSigner(var commonName: String, var organizationalUnit: String? = null, var organizationName: String? = null) {
+    val type: String = "ADP"
+}
+
 class VersionTargetList : MutableList<VersionTarget> by mutableListOf() {
     fun target(moduleName: String? = null, name: String? = null, configure: VersionTarget.() -> Unit = {}): VersionTarget {
         val target = VersionTarget(moduleName, name)
@@ -72,7 +78,7 @@ class VersionProductList : MutableList<VersionProduct> by mutableListOf() {
 }
 
 class VersionManifest(
-    val toolsVersion: String = "5.3.0",
+    val toolsVersion: String = "5.6.0",
     var packageName: String? = null,
     val targets: VersionTargetList = VersionTargetList(),
     val products: VersionProductList = VersionProductList(),
@@ -93,12 +99,14 @@ class VersionManifest(
 }
 
 class PackageVersion(
-    val defaultToolsVersion: String = "5.3.0",
+    val defaultToolsVersion: String = "5.6.0",
     val version: String,
     var summary: String? = null,
     val manifests: MutableMap<String, VersionManifest> = mutableMapOf(),
     val verifiedCompatibility: PlatformCompatibilityList = PlatformCompatibilityList(),
-    var license: PackageLicense? = null
+    var license: PackageLicense? = null,
+    var author: PackageAuthor? = null,
+    var signer: PackageSigner? = null
 ) {
     var createdAt: Instant? = null
         set(value) {
@@ -118,6 +126,15 @@ class PackageVersion(
     fun license(name: String, url: String) {
         license = PackageLicense(name, url)
     }
+
+    fun author(name: String) {
+        author = PackageAuthor(name)
+    }
+
+    fun signer(commonName: String, configure: PackageSigner.() -> Unit = {}) {
+        signer = PackageSigner(commonName)
+        signer?.configure()
+    }
 }
 
 class PackageVersionList : MutableList<PackageVersion> by mutableListOf() {
@@ -131,6 +148,7 @@ class PackageVersionList : MutableList<PackageVersion> by mutableListOf() {
 
 class Package(
     var url: String? = null,
+    var identity: String? = null,
     var summary: String? = null,
     var keywords: MutableList<String> = mutableListOf(),
     var readmeURL: String? = null,
